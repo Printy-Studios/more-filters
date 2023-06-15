@@ -61,8 +61,21 @@ app.get( '/api/orders', async ( _req, res ) => {
           edges{
             node {
               id
-              name
               legacyResourceId
+              name
+              createdAt
+              customer {
+                firstName,
+                lastName
+              }
+              totalPriceSet {
+                shopMoney {
+                  amount
+                  currencyCode
+                }
+              }
+              displayFinancialStatus
+              displayFulfillmentStatus
               lineItems(first: 5) {
                 edges{
                   node{
