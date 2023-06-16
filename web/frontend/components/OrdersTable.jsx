@@ -10,42 +10,66 @@ import {
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 import OrdersTableFilter from './OrdersTableFilter';
 
-function getPaymentStatusBadgeProps( payment_status ) {
-    let badge_status = '';
-    let badge_progress = '';
-    switch ( payment_status ) {
-        case 'PENDING':
-            badge_status = 'warning';
-            badge_progress = 'incomplete';
-            break;
-        case 'PAID':
-            badge_progress = 'complete'
-        default:
-            break;
-    }
 
-    return {
-        status: badge_status,
-        progress: badge_progress
-    };
+function getStatusBadgeData( status, mappings ) {
+    const status_data = mappings.find( mapping => mapping.status == status );
+
+    return status_data;
 }
 
-function getFulfillmentStatusBadgeProps( payment_status ) {
-    let badge_status = '';
-    let badge_progress = '';
-    switch ( payment_status ) {
-        case 'UNFULFILLED':
-            badge_status = 'attention';
-            badge_progress = 'incomplete';
-            break;
-        default:
-            break;
-    }
+function getPaymentStatusBadgeData( payment_status ) {
 
-    return {
-        status: badge_status,
-        progress: badge_progress
-    };
+    const mappings = [
+        {
+            status: 'PENDING',
+            props: {
+                status: 'warning',
+                progress: 'incomplete'
+            },
+            message: 'Payment pending'
+        }, 
+        {
+            status: 'PAID',
+            props: {
+                progress: 'complete'
+            },
+            message: 'Paid'
+        }
+    ];
+
+    return getStatusBadgeData( payment_status, mappings );
+}
+
+function getFulfillmentStatusBadgeData( fulfillment_status ) {
+
+    const mappings = [
+        {
+            status: 'FULFILLED',
+            props: {
+                progress: 'complete'
+            },
+            message: 'Fulfilled'
+        },
+        {
+            status: 'UNFULFILLED',
+            props: {
+                status: 'attention',
+                progress: 'incomplete'
+            },
+            message: 'Unfulfilled'
+        },
+        {
+            status: 'PARTIALLY_FULFILLED',
+            props: {
+                status: 'warning',
+                progress: 'partiallyComplete'
+            },
+            message: 'Partially fulfilled'
+        }
+    ]
+
+    return getStatusBadgeData( fulfillment_status, mappings );
+
 }
 
 function formatStatus( str ) {
@@ -65,13 +89,13 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
 
         const price = order.totalPriceSet.shopMoney;
         const payment_status = order.displayFinancialStatus;
-        const payment_status_formatted = formatStatus( payment_status );
+        //const payment_status_formatted = formatStatus( payment_status );
 
         const fulfillment_status = order.displayFulfillmentStatus;
-        const fulfillment_status_formatted = formatStatus( fulfillment_status );
+        // const fulfillment_status_formatted = formatStatus( fulfillment_status );
 
-        let payment_status_badge_props = getPaymentStatusBadgeProps( payment_status );
-        let fulfillment_status_badge_props = getFulfillmentStatusBadgeProps( fulfillment_status );
+        let payment_status_badge_data = getPaymentStatusBadgeData( payment_status );
+        let fulfillment_status_badge_data = getFulfillmentStatusBadgeData( fulfillment_status );
 
         return (
             <IndexTable.Row
@@ -117,10 +141,10 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                     { `${ price.currencyCode } ${ price.amount }` }
                 </IndexTable.Cell>
                 <IndexTable.Cell>
-                    <Badge { ...payment_status_badge_props } >{ payment_status_formatted }</Badge>
+                    <Badge { ...payment_status_badge_data.props } >{ payment_status_badge_data.message }</Badge>
                 </IndexTable.Cell>
                 <IndexTable.Cell>
-                    <Badge { ...fulfillment_status_badge_props } >{ fulfillment_status_formatted }</Badge>
+                    <Badge { ...fulfillment_status_badge_data.props } >{ fulfillment_status_badge_data.message }</Badge>
                 </IndexTable.Cell>
             </IndexTable.Row>
         );
@@ -144,8 +168,6 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                     { title: 'Payment status' },
                     { title: 'Fulfillment status' },
                     { title: 'Items' },
-                    { title: 'Delivery method' },
-                    { title: 'Tags' },
                 ] }
                 selectable={ false }
             >
