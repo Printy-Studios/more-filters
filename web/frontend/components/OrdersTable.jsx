@@ -1,3 +1,5 @@
+//Core
+import { useState } from 'react';
 import { useNavigate } from '@shopify/app-bridge-react';
 import { 
     IndexTable, 
@@ -6,13 +8,16 @@ import {
     Badge,
     Button,
     Icon,
-    Popover
+    Popover,
+    ActionList
 } from '@shopify/polaris';
-
 import * as icons from '@shopify/polaris-icons';
 import { useI18n, DateStyle } from '@shopify/react-i18n';
 
+//Functions
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
+
+//Components
 import OrdersTableFilter from './OrdersTableFilter';
 
 
@@ -84,22 +89,7 @@ function formatStatus( str ) {
 export default function OrdersTable( { orders, productTags, productTagsSelectedOptions, handleProductTagsSelectedChange } ) {
 
     const navigate = useNavigate();
-    const [ i18n ] = useI18n({
-        id: '123',
-        translations(locale) {
-            console.log('abc');
-            console.log( locale );
-            if( locale == 'en' ) {
-                return {
-                    date: {
-                        humanize: {
-                            yesterday: 'Yesterday'
-                        }
-                    }
-                }
-            }
-        }
-    });
+    const [ i18n ] = useI18n();
 
     const resourceName = {
         singular: 'order',
@@ -177,14 +167,20 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                     <Badge { ...fulfillment_status_badge_data.props } >{ fulfillment_status_badge_data.message }</Badge>
                 </IndexTable.Cell>
                 <IndexTable.Cell>
-                    { order.lineItems.length } Item{ order.lineItems.length > 1 && 's'}
+                    {/* { order.lineItems.length } Item{ order.lineItems.length > 1 && 's'} */}
+                    
+                    
                 </IndexTable.Cell>
             </IndexTable.Row>
         );
     } ) : '';
 
     return (
-        <>
+        <>  
+        <div>
+            
+        </div>
+            
             <OrdersTableFilter
                 productTags={ productTags }
                 productTagsSelectedOptions={ productTagsSelectedOptions }
