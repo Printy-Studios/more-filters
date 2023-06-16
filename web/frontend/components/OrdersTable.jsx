@@ -10,7 +10,7 @@ import {
 } from '@shopify/polaris';
 
 import * as icons from '@shopify/polaris-icons';
-import { useI18n } from '@shopify/react-i18n';
+import { useI18n, DateStyle } from '@shopify/react-i18n';
 
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 import OrdersTableFilter from './OrdersTableFilter';
@@ -84,7 +84,22 @@ function formatStatus( str ) {
 export default function OrdersTable( { orders, productTags, productTagsSelectedOptions, handleProductTagsSelectedChange } ) {
 
     const navigate = useNavigate();
-    const [ i18n ] = useI18n();
+    const [ i18n ] = useI18n({
+        id: '123',
+        translations(locale) {
+            console.log('abc');
+            console.log( locale );
+            if( locale == 'en' ) {
+                return {
+                    date: {
+                        humanize: {
+                            yesterday: 'Yesterday'
+                        }
+                    }
+                }
+            }
+        }
+    });
 
     const resourceName = {
         singular: 'order',
@@ -127,11 +142,15 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     { 
-                        new Date(order.createdAt).toLocaleDateString('en-us', {
-                            weekday: 'long',
-                            hour: 'numeric',
-                            minute: 'numeric'
-                        }) 
+
+                        i18n.formatDate(new Date(order.createdAt), {
+                            style: DateStyle.Humanize
+                        })
+                        // new Date(order.createdAt).toLocaleDateString('en-us', {
+                        //     weekday: 'long',
+                        //     hour: 'numeric',
+                        //     minute: 'numeric'
+                        // }) 
                     }
                 </IndexTable.Cell>
                 <IndexTable.Cell>

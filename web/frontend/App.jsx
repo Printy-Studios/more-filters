@@ -20,8 +20,8 @@ export default function App() {
   const i18nManager = new I18nManager({
     locale,
     onError(error) {
-      Bugsnag.notify(error);
-    },
+      console.error( error );
+    }
   });
 
   return (

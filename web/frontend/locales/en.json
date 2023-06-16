@@ -34,5 +34,10 @@
     },
     "title": "Product Counter",
     "totalProductsHeading": "TOTAL PRODUCTS"
+  },
+  "date": {
+    "humanize": {
+      "yesterday": "Yesterday"
+    }
   }
 }
