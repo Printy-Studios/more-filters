@@ -3,9 +3,14 @@ import {
     IndexTable, 
     Link, 
     Text, 
-    Badge 
+    Badge,
+    Button,
+    Icon,
+    Popover
 } from '@shopify/polaris';
 
+import * as icons from '@shopify/polaris-icons';
+import { useI18n } from '@shopify/react-i18n';
 
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 import OrdersTableFilter from './OrdersTableFilter';
@@ -79,6 +84,7 @@ function formatStatus( str ) {
 export default function OrdersTable( { orders, productTags, productTagsSelectedOptions, handleProductTagsSelectedChange } ) {
 
     const navigate = useNavigate();
+    const [ i18n ] = useI18n();
 
     const resourceName = {
         singular: 'order',
@@ -138,13 +144,21 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                     }
                 </IndexTable.Cell>
                 <IndexTable.Cell>
-                    { `${ price.currencyCode } ${ price.amount }` }
+                    {
+                        i18n.formatCurrency( price.amount, {
+                            currency: price.currencyCode,
+                            form: 'short'
+                        } )
+                    }
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     <Badge { ...payment_status_badge_data.props } >{ payment_status_badge_data.message }</Badge>
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     <Badge { ...fulfillment_status_badge_data.props } >{ fulfillment_status_badge_data.message }</Badge>
+                </IndexTable.Cell>
+                <IndexTable.Cell>
+                    { order.lineItems.length } Item{ order.lineItems.length > 1 && 's'}
                 </IndexTable.Cell>
             </IndexTable.Row>
         );

@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "@shopify/app": "3.46.5",
-    "@shopify/cli": "3.46.5"
+    "@shopify/cli": "3.46.5",
+    "@shopify/react-i18n": "^7.8.0"
   },
   "author": "lucky",
   "private": true,
