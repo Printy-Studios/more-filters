@@ -142,15 +142,15 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     { 
-
-                        i18n.formatDate(new Date(order.createdAt), {
-                            style: DateStyle.Humanize
-                        })
-                        // new Date(order.createdAt).toLocaleDateString('en-us', {
-                        //     weekday: 'long',
-                        //     hour: 'numeric',
-                        //     minute: 'numeric'
-                        // }) 
+                        // #TODO: Add i18n formatted date
+                        // i18n.formatDate(new Date(order.createdAt), {
+                        //     style: DateStyle.Humanize
+                        // })
+                        new Date(order.createdAt).toLocaleDateString('en-us', {
+                            weekday: 'long',
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        }) 
                     }
                 </IndexTable.Cell>
                 <IndexTable.Cell>
