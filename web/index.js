@@ -81,6 +81,7 @@ app.get( '/api/orders', async ( _req, res ) => {
                   node{
                     id
                     name
+                    currentQuantity
                   }
                 }
               }

@@ -1,23 +1,37 @@
-export default function ProductsPopover() {
+import { useState } from 'react';
+import { Popover, Button, ResourceList, ResourceItem } from '@shopify/polaris';
+
+export default function ProductsPopover( { products, label } ) {
 
     const [ popoverActive, setPopoverActive ] = useState( false );
 
     return (
         <Popover
-            active={ itemsPopoverActive }
+            active={ popoverActive }
             activator={
                 <Button
                     disclosure
                     fullWidth
                     onClick={ () => setPopoverActive( ! popoverActive ) }
                 >
-                    { order.lineItems.length } Item{ order.lineItems.length > 1 && 's'}
+                    { label }
                 </Button>
             }
+            onClose={ () => setPopoverActive( false ) }
         >
-            <ResourceList>
-                
-            </ResourceList>
+            {Array.isArray( products ) && products.length &&
+                <ResourceList
+                    resourceName={ { singular: 'product', plural: 'products'}}
+                    items={ products }
+                    renderItem={ ( item ) => {
+                        return (
+                            <ResourceItem>
+                                { item.name }{ item.currentQuantity > 1 && '(' + item.currentQuantity + ')' }
+                            </ResourceItem>
+                        )
+                    } }
+                />
+            }
         </Popover>
     )
 }

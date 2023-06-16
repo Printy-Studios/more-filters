@@ -19,6 +19,7 @@ import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 
 //Components
 import OrdersTableFilter from './OrdersTableFilter';
+import ProductsPopover from './ProductsPopover';
 
 
 function getStatusBadgeData( status, mappings ) {
@@ -168,8 +169,10 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     {/* { order.lineItems.length } Item{ order.lineItems.length > 1 && 's'} */}
-                    
-                    
+                    <ProductsPopover 
+                        products={ order.lineItems }
+                        label={ `${ order.lineItems.length } Item${ order.lineItems.length > 1 ? 's' : '' }` }
+                    />
                 </IndexTable.Cell>
             </IndexTable.Row>
         );
