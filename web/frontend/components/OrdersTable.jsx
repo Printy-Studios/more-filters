@@ -133,7 +133,7 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                 </IndexTable.Cell>
                 <IndexTable.Cell>
                     { 
-                        // #TODO: Add i18n formatted date
+                        // TODO: Add i18n formatted date
                         // i18n.formatDate(new Date(order.createdAt), {
                         //     style: DateStyle.Humanize
                         // })
@@ -145,6 +145,7 @@ export default function OrdersTable( { orders, productTags, productTagsSelectedO
                     }
                 </IndexTable.Cell>
                 <IndexTable.Cell>
+                    {/* #TODO: Add link to customer here */}
                     { order.customer ?
                         order.customer.firstName + ' ' + order.customer.lastName
                     :

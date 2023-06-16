@@ -102,9 +102,9 @@ export default function HomePage() {
             productTagsSelectedOptions={ productTagsSelectedOptions }
           />
         </Layout.Section>
-        <Layout.Section>
+        {/* <Layout.Section>
           <ProductsCard />
-        </Layout.Section>
+        </Layout.Section> */}
       </Layout>
     </Page>
   );
