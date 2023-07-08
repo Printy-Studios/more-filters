@@ -77,11 +77,14 @@ app.get( '/api/orders', async ( _req, res ) => {
               displayFinancialStatus
               displayFulfillmentStatus
               lineItems(first: 5) {
-                edges{
-                  node{
+                edges {
+                  node {
                     id
                     name
                     currentQuantity
+                    product {
+                      legacyResourceId
+                    }
                   }
                 }
               }

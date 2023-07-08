@@ -53,7 +53,7 @@ export default function HomePage() {
     //const tags = ['tag1', 'tag2'];
     const response = await fetch( 'api/products?' + query_params.join( '&' ) );
     const data = await response.json();
-    console.log( 'products:', data );
+    console.log( 'product:', data );
   }
 
   useEffect(async () => {

@@ -1,9 +1,14 @@
+import { useNavigate } from '@shopify/app-bridge-react';
 import { useState } from 'react';
 import { Popover, Button, ResourceList, ResourceItem } from '@shopify/polaris';
 
 export default function ProductsPopover( { products, label } ) {
 
+    const navigate = useNavigate();
+
     const [ popoverActive, setPopoverActive ] = useState( false );
+
+    console.log('popover products: ', products);
 
     return (
         <Popover
@@ -25,7 +30,16 @@ export default function ProductsPopover( { products, label } ) {
                     items={ products }
                     renderItem={ ( item ) => {
                         return (
-                            <ResourceItem>
+                            <ResourceItem
+                                onClick={ () => { 
+                                    navigate( {
+                                        name: 'Product', 
+                                        resource: {
+                                            id: item.product.legacyResourceId
+                                        }
+                                    } )
+                                } }
+                            >
                                 { item.name }{ item.currentQuantity > 1 && '(' + item.currentQuantity + ')' }
                             </ResourceItem>
                         )

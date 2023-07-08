@@ -23,9 +23,20 @@ import ProductsPopover from './ProductsPopover';
 
 
 function getStatusBadgeData( status, mappings ) {
+
+    const default_status_data = {
+        props: {
+
+        },
+        message: 'Default status'
+    }
+
     const status_data = mappings.find( mapping => mapping.status == status );
 
-    return status_data;
+    return {
+        ...default_status_data,
+        ...status_data
+    }
 }
 
 function getPaymentStatusBadgeData( payment_status ) {
